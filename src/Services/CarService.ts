@@ -22,10 +22,10 @@ export default class CarService {
 
   public async findAll() {
     const getCar = await this.carODM.findAll();
-    console.log('GET CAR ------', getCar);
+    // console.log('GET CAR ------', getCar);
     
     const cars = getCar.map((car) => new Car(car));
-    console.log('CARSSSS------', cars);
+    // console.log('CARSSSS------', cars);
     
     return { status: 200, response: cars };
   }
@@ -50,6 +50,29 @@ export default class CarService {
     return {
       status: 200,
       response: car,
+    };
+  }
+
+  public async findAndUpdate(id: string, car: ICar) {
+    if (!isValidObjectId(id)) {
+      return {
+        status: 422,
+        response: { message: 'Invalid mongo id' },
+      };
+    }
+    const updatedCar = await this.carODM.findByIdAndUpdate(id, car);
+    const update = await this.register(updatedCar);
+    console.log('UPDATE-------------', update);
+
+    if (update === null) {
+      return {
+        status: 404,
+        response: { message: 'Car not found' },
+      };
+    }
+    return {
+      status: 200,
+      response: update,
     };
   }
 }

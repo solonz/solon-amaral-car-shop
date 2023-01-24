@@ -41,4 +41,15 @@ export default class CarController {
       this.next(error);
     }
   }
+
+  public async findAndUpdate() {
+    try {
+      const { id } = this.req.params;
+      const car = { ...this.req.body };
+      const result = await this.carService.findAndUpdate(id, car);
+      return this.res.status(result.status).json(result.response);
+    } catch (error) {
+      this.next(error);
+    }
+  }
 }

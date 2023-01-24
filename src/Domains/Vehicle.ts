@@ -1,4 +1,4 @@
-import { IVehicle } from '../Interfaces/IVehicle';
+import IVehicle from '../Interfaces/IVehicle';
 
 export default class Vehicle {
   protected id: string | undefined;

@@ -1,4 +1,5 @@
-import { model, Model, models, Schema } from 'mongoose';
+import { model, Model, models, Schema, UpdateQuery } from 'mongoose';
+import IVehicle from '../Interfaces/IVehicle';
 
 export default abstract class AbstractODM<T> {
   protected model: Model<T>;
@@ -21,5 +22,13 @@ export default abstract class AbstractODM<T> {
 
   public async findById(id: string): Promise<T | null> {
     return this.model.findById(id);
+  }
+
+  public async findByIdAndUpdate(id: string, vehicle: IVehicle): Promise<T | null> {    
+    return this.model.findByIdAndUpdate(
+      { _id: id },
+      { ...vehicle } as UpdateQuery<IVehicle>,
+      { new: true },
+    );    
   }
 }
