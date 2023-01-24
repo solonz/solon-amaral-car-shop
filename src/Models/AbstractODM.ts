@@ -16,7 +16,7 @@ export default abstract class AbstractODM<T> {
     return this.model.create({ ...obj });
   }
 
-  public async findAll(): Promise<T[]> {
+  public async findAll(): Promise<T[] | []> {
     return this.model.find();
   }
 

@@ -1,11 +1,11 @@
 import IVehicle from '../Interfaces/IVehicle';
 
-export default class Vehicle {
+export default abstract class Vehicle {
   protected id: string | undefined;
   protected model: string;
   protected year: number;
   protected color: string;
-  protected status?: boolean;
+  protected status: boolean | false;
   protected buyValue: number;
 
   constructor(vehicle: IVehicle) {
@@ -13,7 +13,7 @@ export default class Vehicle {
     this.model = vehicle.model;
     this.year = vehicle.year;
     this.color = vehicle.color;
-    this.status = vehicle.status === true;
+    this.status = vehicle.status || false;
     this.buyValue = vehicle.buyValue;
   }
 }

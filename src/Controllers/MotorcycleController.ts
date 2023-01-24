@@ -17,9 +17,24 @@ export default class MotorcycleController {
 
   public async create() {
     const moto: IMotorcycle = this.req.body;
-    console.log('MOTO CONTROLLER-------------', moto);
+    // console.log('MOTO CONTROLLER-------------', moto);
     const createMoto = await this.motorcycleService.create(moto);
-    console.log('CREATEMOTO CONTROLLER---------', createMoto);
+    // console.log('CREATEMOTO CONTROLLER---------', createMoto);
     return this.res.status(201).json(createMoto);
+  }
+
+  public async findAll() {
+    const result = await this.motorcycleService.findAll();
+    return this.res.status(result.status).json(result.response);
+  }
+
+  public async findById() {
+    const { id } = this.req.params;
+    try {
+      const result = await this.motorcycleService.findById(id);
+      return this.res.status(result.status).json(result.response);
+    } catch (error) {
+      this.next(error);
+    }
   }
 }

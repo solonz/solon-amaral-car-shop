@@ -62,7 +62,7 @@ export default class CarService {
     }
     const updatedCar = await this.carODM.findByIdAndUpdate(id, car);
     const update = await this.register(updatedCar);
-    console.log('UPDATE-------------', update);
+    // console.log('UPDATE-------------', update);
 
     if (update === null) {
       return {
