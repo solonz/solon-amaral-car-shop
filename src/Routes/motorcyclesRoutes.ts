@@ -9,5 +9,9 @@ motorcycleRoutes.get(
   '/:id', 
   (req, res, next) => new MotorcycleController(req, res, next).findById(),
 );
+motorcycleRoutes.put(
+  '/:id', 
+  (req, res, next) => new MotorcycleController(req, res, next).findAndUpdate(),
+);
 
 export default motorcycleRoutes;

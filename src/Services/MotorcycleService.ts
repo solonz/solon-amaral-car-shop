@@ -19,27 +19,17 @@ export default class MotorcycleService {
 
   public async create(moto: IMotorcycle) {
     const motorcycle = await this.MotorcycleODM.create(moto);
-    console.log('MOTORCYCLE SERVICE--------', motorcycle);
+    // console.log('MOTORCYCLE SERVICE--------', motorcycle);
     
     return this.register(motorcycle);
-    // if (!criar) {
-    //   return { 
-    //     status: 404,
-    //     response: 'faio',
-    //   };
-    //   return {
-    //     status: 201,
-    //     response: criar,
-    //   };
-    // }
   }
 
   public async findAll() {
     const getMoto = await this.MotorcycleODM.findAll();
-    console.log('GET MOTOSSSS ------', getMoto);
+    // console.log('GET MOTOSSSS ------', getMoto);
     
     const motos = getMoto.map((moto) => this.register(moto));
-    console.log('MOTOSSSSSS------', motos);
+    // console.log('MOTOSSSSSS------', motos);
     
     return { status: 200, response: motos };
   }
@@ -64,6 +54,31 @@ export default class MotorcycleService {
     return {
       status: 200,
       response: moto,
+    };
+  }
+
+  public async findAndUpdate(id: string, moto: IMotorcycle) {
+    if (!isValidObjectId(id)) {
+      return {
+        status: 422,
+        response: { message: 'Invalid mongo id' },
+      };
+    }
+    const updatedMoto = await this.MotorcycleODM.findById(id);
+    // console.log('UPDATE-------------', update);
+
+    if (updatedMoto === null || !updatedMoto) {
+      return {
+        status: 404,
+        response: { message: 'Motorcycle not found' },
+      };
+    }
+    await this.MotorcycleODM.findByIdAndUpdate(id, moto);
+    const getUpdatedMoto = await this.MotorcycleODM.findById(id);
+    const result = this.register(getUpdatedMoto);
+    return {
+      status: 200,
+      response: result,
     };
   }
 }
